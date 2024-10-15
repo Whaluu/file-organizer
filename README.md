@@ -13,8 +13,6 @@ Sortify is a simple file organizer application built with Python and Tkinter. It
   - Scripts
   - Others (for unrecognized file types)
 - Progress bar to visualize the organization process.
-- Error handling with logging for any issues encountered during file movement.
-- User-friendly graphical interface using `ttkbootstrap`.
 
 ## Requirements
 
