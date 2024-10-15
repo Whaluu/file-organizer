@@ -1,7 +1,7 @@
 import os
 import shutil
-
-source_directory = ''  # path to where you want to sort your files
+import tkinter as tk
+from tkinter import filedialog, messagebox
 
 file_types = {
     "Images": ['.jpeg', '.jpg', '.png', '.gif', '.bmp'],
@@ -12,14 +12,12 @@ file_types = {
     "Scripts": ['.py', '.js', '.html', '.css']
 }
 
-# Create new folder for the file types if they don't exist
 def create_folder(destination_directory):
     for folder_name in file_types.keys():
         folder_path = os.path.join(destination_directory, folder_name)
         if not os.path.exists(folder_path):
             os.makedirs(folder_path)
 
-# Organize files by moving them into the appropriate folders
 def organize_files(source_directory):
     while True:
         files_moved = False
@@ -41,7 +39,6 @@ def organize_files(source_directory):
                 if file_extension in map(str.lower, extensions):
                     destination = os.path.join(source_directory, folder_name, file_name)
                     shutil.move(file_path, destination)
-                    print(f'Moved: {file_name} -> {folder_name}')
                     moved = True
                     files_moved = True
                     break
@@ -51,14 +48,40 @@ def organize_files(source_directory):
                 if not os.path.exists(other_folder):
                     os.makedirs(other_folder)
                 shutil.move(file_path, os.path.join(other_folder, file_name))
-                print(f'Moved: {file_name} -> Others')
                 files_moved = True
 
-        # If no files were moved, break the loop (prevents infinite looping)
         if not files_moved:
             break
 
-if __name__ == '__main__':
-    create_folder(source_directory)
-    organize_files(source_directory)
-    print("File organization complete!")
+def organize():
+    directory = path_entry.get()
+
+    if not os.path.isdir(directory):
+        messagebox.showerror("Error", "Please provide a valid directory path.")
+        return
+
+    create_folder(directory)
+    organize_files(directory)
+    messagebox.showinfo("Success", "Files have been organized successfully!")
+
+def browse_directory():
+    folder_selected = filedialog.askdirectory()
+    path_entry.delete(0, tk.END)
+    path_entry.insert(0, folder_selected)
+
+root = tk.Tk()
+root.title("File Organizer")
+
+label = tk.Label(root, text="Enter the folder path or select one:")
+label.pack(pady=10)
+
+path_entry = tk.Entry(root, width=50)
+path_entry.pack(pady=5)
+
+browse_button = tk.Button(root, text="Browse", command=browse_directory)
+browse_button.pack(pady=5)
+
+organize_button = tk.Button(root, text="Organize Files", command=organize)
+organize_button.pack(pady=20)
+
+root.mainloop()
