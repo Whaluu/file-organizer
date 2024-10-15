@@ -39,6 +39,9 @@ Or Download the Zip by Clicking <b>Code</b> > <b>Download ZIP</b>
 
 Or, if you have packaged it as a standalone executable using PyInstaller, simply run the executable file found in the dist folder.
 
+## Downloading the Application
+You can go to Releases and you can download the `Sortify.-.v1.0.0.rar`
+
 ## Usage
 1. Launch the application.
 2. Click the "Browse" button to select the folder you want to organize.
